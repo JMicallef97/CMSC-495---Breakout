@@ -28,7 +28,8 @@ class GameView(arcade.View):
         gameStateMgr.initGameStates()
 
         # set the starting game state here
-        gameStateMgr.setGameState("Test Menu")
+        #gameStateMgr.setGameState("Test Menu")
+        gameStateMgr.setGameState("Main Menu")
 
     # Resets the game to its initial state
     def reset(self):
