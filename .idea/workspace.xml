@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only.">
-      <change beforePath="$PROJECT_DIR$/.idea/CMSC 495 - Breakout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CMSC 495 - Breakout.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="Testing commit function" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +34,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/StartMenuState.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/StartMenuState.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -87,7 +83,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743561094814</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Testing commit function">
+      <option name="closed" value="true" />
+      <created>1743645012762</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743645012762</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Testing commit function">
+      <option name="closed" value="true" />
+      <created>1743645052035</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743645052035</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -103,6 +115,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only." />
+    <MESSAGE value="Testing commit function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Testing commit function" />
   </component>
 </project>
