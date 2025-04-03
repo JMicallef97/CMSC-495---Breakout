@@ -3,6 +3,8 @@ from Constants import Constants
 from GameState import GameState
 from InputManager import InputManager
 
+#testing commit function
+
 class StartMenuState(GameState):
     def __init__(self):
         super().__init__("Main Menu")

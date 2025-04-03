@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/StartMenuState.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore.txt" beforeDir="false" />
+    <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only.">
+      <change beforePath="$PROJECT_DIR$/.idea/CMSC 495 - Breakout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CMSC 495 - Breakout.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameStateManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameStateManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +23,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -34,10 +33,13 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/JMicallef97/CMSC-495---Breakout.git&quot;,
-    &quot;accountId&quot;: &quot;8af048b1-7317-46aa-bc5e-624cbfe6288e&quot;
+    &quot;url&quot;: &quot;https://github.com/JMicallef97/CMSC-495---Breakout&quot;,
+    &quot;accountId&quot;: &quot;470625fc-f9cb-4163-9e7c-e7da6b4afecc&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/StartMenuState.py" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -77,6 +79,30 @@
       <option name="presentableId" value="Default" />
       <updated>1743057105067</updated>
     </task>
+    <task id="LOCAL-00001" summary="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only.">
+      <option name="closed" value="true" />
+      <created>1743561094814</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743561094814</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only." />
   </component>
 </project>
