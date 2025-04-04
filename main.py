@@ -102,7 +102,7 @@ def main():
 
     """ Main function """
 
-    # Create a window class. This is what actually shows up on screen
+    #   Create a window class. This is what actually shows up on screen
     window = arcade.Window(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, Constants.WINDOW_TITLE)
 
     # Create and setup the GameView

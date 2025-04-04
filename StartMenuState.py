@@ -1,128 +1,71 @@
 import arcade
-from Constants import Constants
+import arcade.gui
 from GameState import GameState
-from InputManager import InputManager
 
-#testing commit function 32
 
+# ----------------------------
+# Main Menu State and View
+# ----------------------------
 class StartMenuState(GameState):
     def __init__(self):
         super().__init__("Main Menu")
-        self.options = ["Start Game", "How To Play", "High Scores"]
-        self.selected_option = 0
-        # Prepare bounding boxes and text objects.
-        self.option_boxes = []  # List of tuples: (left, right, bottom, top)
-        self.menu_texts = []    # arcade.Text objects for each option
-        self.title_text = arcade.Text(
-            "Main Menu",
-            Constants.WINDOW_WIDTH / 2,
-            Constants.WINDOW_HEIGHT - 100,
-            arcade.color.WHITE,
-            40,
-            anchor_x="center"
-        )
-        self.setup_options()
+        # Set up the UI manager to hold our widgets
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
 
-    def setup_options(self):
-        center_x = Constants.WINDOW_WIDTH // 2
-        start_y = Constants.WINDOW_HEIGHT // 2 + 50
-        gap = 50
-        box_width = 200
-        box_height = 40
-        self.option_boxes = []
-        self.menu_texts = []
-        for i, option in enumerate(self.options):
-            center_y = start_y - i * gap
-            left = center_x - box_width // 2
-            right = center_x + box_width // 2
-            bottom = center_y - box_height // 2
-            top = center_y + box_height // 2
-            self.option_boxes.append((left, right, bottom, top))
-            text = arcade.Text(
-                option,
-                center_x,
-                center_y,
-                arcade.color.WHITE,
-                24,
-                anchor_x="center",
-                anchor_y="center"
-            )
-            self.menu_texts.append(text)
+        # Create a vertical box layout for the title and buttons
+        self.v_box = arcade.gui.UIBoxLayout(vertical=True, space_between=20)
+
+        # Title label at the top
+        title_label = arcade.gui.UILabel(
+            text="Main Screen", font_size=40, text_color=arcade.color.WHITE
+        )
+        self.v_box.add(title_label)
+        # Add extra spacing after the title.
+        self.v_box.add(arcade.gui.UISpace(height=50))
+
+        # Define the menu options.
+        self.options = ["Start Game", "How To Play", "Adjust difficulty", "High Scores"]
+
+        # Create a button for each option.
+        for option in self.options:
+            button = arcade.gui.UIFlatButton(text=option, width=200)
+            self.v_box.add(button)
+            # Attach a click event that opens a different view based on the option.
+            button.on_click = self.make_option_click_handler(option)
+
+        # Center the layout in the window
+        self.anchor = arcade.gui.UIAnchorLayout()
+        self.anchor.add(anchor_x="center_x", anchor_y="center_y", child=self.v_box)
+        self.manager.add(self.anchor)
+
+    def make_option_click_handler(self, option):
+        # Returns a handler that opens a different view based on the option text
+        def on_click(event):
+            if option == "Start Game":
+                view = StartGameStateView()
+            elif option == "How To Play":
+                view = HowToPlayStateView()
+            elif option == "Adjust difficulty":
+                view = AdjustDifficultyStateView()
+            elif option == "High Scores":
+                view = HighScoresStateView()
+            arcade.get_window().show_view(view)
+
+        return on_click
 
     def updateState(self):
-        # --- Mouse Input ---
-        if InputManager.isLeftMouseButtonPressed:
-            x = InputManager.mouseCoordX
-            y = InputManager.mouseCoordY
-            for idx, (left, right, bottom, top) in enumerate(self.option_boxes):
-                if left <= x <= right and bottom <= y <= top:
-                    self.select_option(idx)
-                    InputManager.isLeftMouseButtonPressed = False
-                    break
+        # No update logic required for the static main menu.
+        pass
 
     def drawState(self):
-        self.title_text.draw()
-        for idx, text in enumerate(self.menu_texts):
-            left, right, bottom, top = self.option_boxes[idx]
-            if idx == self.selected_option:
-                arcade.draw_rectangle_filled(
-                    (left + right) / 2,
-                    (bottom + top) / 2,
-                    right - left,
-                    top - bottom,
-                    arcade.color.GRAY
-                )
-                text.color = arcade.color.YELLOW
-            else:
-                text.color = arcade.color.WHITE
-            text.draw()
-
-    def select_option(self, index):
-        window = arcade.get_window()
-        if index == 0:
-            window.show_view(StartGameStateView())
-        elif index == 1:
-            window.show_view(HowToPlayStateView())
-        elif index == 2:
-            window.show_view(HighScoresStateView())
+        self.manager.draw()
 
 
-class SubMenuState(GameState):
-    def __init__(self, title):
-        super().__init__(title)
-        self.title = title
-        self.screen_text = arcade.Text(
-            f"{self.title} Screen",
-            Constants.WINDOW_WIDTH / 2,
-            Constants.WINDOW_HEIGHT / 2,
-            arcade.color.WHITE,
-            24,
-            anchor_x="center",
-            anchor_y="center"
-        )
-        self.back_text = arcade.Text(
-            "<- Back",
-            10,
-            Constants.WINDOW_HEIGHT - 40,
-            arcade.color.WHITE,
-            20
-        )
-
-    def updateState(self):
-        # Mouse "Back" Button
-        if InputManager.isLeftMouseButtonPressed:
-            if 10 <= InputManager.mouseCoordX <= 100 and Constants.WINDOW_HEIGHT - 60 <= InputManager.mouseCoordY <= Constants.WINDOW_HEIGHT - 20:
-                arcade.get_window().show_view(TestMenuStateView())
-                InputManager.isLeftMouseButtonPressed = False
-
-    def drawState(self):
-        self.screen_text.draw()
-        self.back_text.draw()
-
-class TestMenuStateView(arcade.View):
+class MainMenuView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.state = TestMenuState()
+        self.state = StartMenuState()
 
     def on_draw(self):
         self.clear()
@@ -131,26 +74,53 @@ class TestMenuStateView(arcade.View):
     def on_update(self, delta_time):
         self.state.updateState()
 
-    def on_key_press(self, key, modifiers):
-        # Forward key presses to InputManager.
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = True
-
-    def on_key_release(self, key, modifiers):
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = False
-
     def on_mouse_press(self, x, y, button, modifiers):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            InputManager.isLeftMouseButtonPressed = True
-            InputManager.mouseCoordX = x
-            InputManager.mouseCoordY = y
+        self.state.manager.on_mouse_press(x, y, button, modifiers)
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        self.state.manager.on_mouse_release(x, y, button, modifiers)
+
+
+# ----------------------------
+# Start Game State and View
+# ----------------------------
+class StartGameState(GameState):
+    def __init__(self):
+        super().__init__("Start Game")
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+
+        # Back button at the top left
+        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
+        self.back_button.on_click = self.on_click_back
+        self.back_anchor = arcade.gui.UIAnchorLayout()
+        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
+        self.manager.add(self.back_anchor)
+
+        # Placeholder label to indicate the game is starting.
+        self.info_label = arcade.gui.UILabel(
+            text="Starting the game...", font_size=30, text_color=arcade.color.WHITE
+        )
+        self.center_anchor = arcade.gui.UIAnchorLayout()
+        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.info_label)
+        self.manager.add(self.center_anchor)
+
+    def on_click_back(self, event):
+        # Return to the main menu
+        arcade.get_window().show_view(MainMenuView())
+
+    def updateState(self):
+        # Game-start logic would be added here.
+        pass
+
+    def drawState(self):
+        self.manager.draw()
 
 
 class StartGameStateView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.state = SubMenuState("Start Game")
+        self.state = StartGameState()
 
     def on_draw(self):
         self.clear()
@@ -159,25 +129,57 @@ class StartGameStateView(arcade.View):
     def on_update(self, delta_time):
         self.state.updateState()
 
-    def on_key_press(self, key, modifiers):
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = True
-
-    def on_key_release(self, key, modifiers):
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = False
-
     def on_mouse_press(self, x, y, button, modifiers):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            InputManager.isLeftMouseButtonPressed = True
-            InputManager.mouseCoordX = x
-            InputManager.mouseCoordY = y
+        self.state.manager.on_mouse_press(x, y, button, modifiers)
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        self.state.manager.on_mouse_release(x, y, button, modifiers)
+
+
+# ----------------------------
+# How To Play State and View
+# ----------------------------
+class HowToPlayState(GameState):
+    def __init__(self):
+        super().__init__("How To Play")
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+
+        # Back button for returning to main menu.
+        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
+        self.back_button.on_click = self.on_click_back
+        self.back_anchor = arcade.gui.UIAnchorLayout()
+        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
+        self.manager.add(self.back_anchor)
+
+        # Instruction label with some sample text.
+        instructions = (
+            "How To Play:\n"
+            "- Use arrow keys to move your paddle.\n"
+            "- Bounce the ball to break bricks.\n"
+            "- Don't let the ball fall!"
+        )
+        self.info_label = arcade.gui.UILabel(
+            text=instructions, font_size=20, text_color=arcade.color.WHITE, multiline=True, width=400
+        )
+        self.center_anchor = arcade.gui.UIAnchorLayout()
+        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.info_label)
+        self.manager.add(self.center_anchor)
+
+    def on_click_back(self, event):
+        arcade.get_window().show_view(MainMenuView())
+
+    def updateState(self):
+        pass
+
+    def drawState(self):
+        self.manager.draw()
 
 
 class HowToPlayStateView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.state = SubMenuState("How To Play")
+        self.state = HowToPlayState()
 
     def on_draw(self):
         self.clear()
@@ -186,25 +188,119 @@ class HowToPlayStateView(arcade.View):
     def on_update(self, delta_time):
         self.state.updateState()
 
-    def on_key_press(self, key, modifiers):
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = True
+    def on_mouse_press(self, x, y, button, modifiers):
+        self.state.manager.on_mouse_press(x, y, button, modifiers)
 
-    def on_key_release(self, key, modifiers):
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = False
+    def on_mouse_release(self, x, y, button, modifiers):
+        self.state.manager.on_mouse_release(x, y, button, modifiers)
+
+
+# ----------------------------
+# Adjust Difficulty State and View
+# ----------------------------
+class AdjustDifficultyState(GameState):
+    def __init__(self):
+        super().__init__("Adjust Difficulty")
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+
+        # Back button at top left.
+        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
+        self.back_button.on_click = self.on_click_back
+        self.back_anchor = arcade.gui.UIAnchorLayout()
+        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
+        self.manager.add(self.back_anchor)
+
+        # Create a slider for difficulty adjustment.
+        self.slider_label = arcade.gui.UILabel(
+            text="Select Difficulty:", font_size=20, text_color=arcade.color.WHITE
+        )
+        self.difficulty_slider = arcade.gui.UISlider(value=50, width=300)
+
+        # Box layout for slider and label.
+        self.slider_box = arcade.gui.UIBoxLayout(vertical=True, space_between=10)
+        self.slider_box.add(self.slider_label)
+        self.slider_box.add(self.difficulty_slider)
+
+        # Center the slider box.
+        self.center_anchor = arcade.gui.UIAnchorLayout()
+        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.slider_box)
+        self.manager.add(self.center_anchor)
+
+    def on_click_back(self, event):
+        arcade.get_window().show_view(MainMenuView())
+
+    def updateState(self):
+        # You might add logic here to update difficulty based on slider value.
+        pass
+
+    def drawState(self):
+        self.manager.draw()
+
+
+class AdjustDifficultyStateView(arcade.View):
+    def __init__(self):
+        super().__init__()
+        self.state = AdjustDifficultyState()
+
+    def on_draw(self):
+        self.clear()
+        self.state.drawState()
+
+    def on_update(self, delta_time):
+        self.state.updateState()
 
     def on_mouse_press(self, x, y, button, modifiers):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            InputManager.isLeftMouseButtonPressed = True
-            InputManager.mouseCoordX = x
-            InputManager.mouseCoordY = y
+        self.state.manager.on_mouse_press(x, y, button, modifiers)
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        self.state.manager.on_mouse_release(x, y, button, modifiers)
+
+
+# ----------------------------
+# High Scores State and View
+# ----------------------------
+class HighScoresState(GameState):
+    def __init__(self):
+        super().__init__("High Scores")
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+
+        # Back button for returning to the main menu.
+        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
+        self.back_button.on_click = self.on_click_back
+        self.back_anchor = arcade.gui.UIAnchorLayout()
+        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
+        self.manager.add(self.back_anchor)
+
+        # Placeholder high scores display.
+        scores = (
+            "High Scores:\n"
+             "1. AAA - 10000\n"
+              "2. BBB - 8000\n"
+            "    3. CCC - 6000"
+        )
+        self.info_label = arcade.gui.UILabel(
+            text=scores, font_size=20, text_color=arcade.color.WHITE, multiline=True, width=400
+        )
+        self.center_anchor = arcade.gui.UIAnchorLayout()
+        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.info_label)
+        self.manager.add(self.center_anchor)
+
+    def on_click_back(self, event):
+        arcade.get_window().show_view(MainMenuView())
+
+    def updateState(self):
+        pass
+
+    def drawState(self):
+        self.manager.draw()
 
 
 class HighScoresStateView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.state = SubMenuState("High Scores")
+        self.state = HighScoresState()
 
     def on_draw(self):
         self.clear()
@@ -213,16 +309,8 @@ class HighScoresStateView(arcade.View):
     def on_update(self, delta_time):
         self.state.updateState()
 
-    def on_key_press(self, key, modifiers):
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = True
-
-    def on_key_release(self, key, modifiers):
-        if key in InputManager.isKeyPressed:
-            InputManager.isKeyPressed[key] = False
-
     def on_mouse_press(self, x, y, button, modifiers):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            InputManager.isLeftMouseButtonPressed = True
-            InputManager.mouseCoordX = x
-            InputManager.mouseCoordY = y
+        self.state.manager.on_mouse_press(x, y, button, modifiers)
+
+    def on_mouse_release(self, x, y, button, modifiers):
+        self.state.manager.on_mouse_release(x, y, button, modifiers)
