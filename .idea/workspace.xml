@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="Adjusted StartMenuState.py to work properly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StartMenuState.py" beforeDir="false" afterPath="$PROJECT_DIR$/StartMenuState.py" afterDir="false" />
+=======
+    <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="Testing commit function">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,10 +35,17 @@
     &quot;assignee&quot;: &quot;JMicallef97&quot;
   }
 }</component>
+<<<<<<< Updated upstream
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/JMicallef97/CMSC-495---Breakout&quot;,
     &quot;accountId&quot;: &quot;5add16eb-73ec-44df-a632-20087660a562&quot;
+=======
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/JMicallef97/CMSC-495---Breakout.git",
+    "accountId": "8af048b1-7317-46aa-bc5e-624cbfe6288e"
+>>>>>>> Stashed changes
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -64,7 +76,11 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/grand/PycharmProjects/CMSC-495---Breakout&quot;,
+<<<<<<< Updated upstream
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+=======
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
+>>>>>>> Stashed changes
   }
 }</component>
   <component name="SharedIndexes">
