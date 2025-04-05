@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="Testing commit function">
-      <change beforePath="$PROJECT_DIR$/.idea/CMSC 495 - Breakout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CMSC 495 - Breakout.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="306fede5-8092-450e-8091-864ecf7c4938" name="Changes" comment="Adjusted StartMenuState.py to work properly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StartMenuState.py" beforeDir="false" afterPath="$PROJECT_DIR$/StartMenuState.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,12 +30,12 @@
     &quot;assignee&quot;: &quot;JMicallef97&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/JMicallef97/CMSC-495---Breakout",
-    "accountId": "5add16eb-73ec-44df-a632-20087660a562"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JMicallef97/CMSC-495---Breakout&quot;,
+    &quot;accountId&quot;: &quot;5add16eb-73ec-44df-a632-20087660a562&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/StartMenuState.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -56,20 +53,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.GameState.executor": "Run",
-    "Python.GameStateManager.executor": "Run",
-    "Python.StartMenuState.executor": "Run",
-    "Python.TestMenuState.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/grand/PycharmProjects/CMSC-495---Breakout",
-    "settings.editor.selected.configurable": "settings.sync"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.GameState.executor&quot;: &quot;Run&quot;,
+    &quot;Python.GameStateManager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.StartMenuState.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TestMenuState.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/grand/PycharmProjects/CMSC-495---Breakout&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -118,7 +115,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743645311758</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Adjusted StartMenuState.py to work properly">
+      <option name="closed" value="true" />
+      <created>1743736784809</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743736784809</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -135,7 +140,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated the TestMenuState.py to show the main menu options. Still have more to work on as the background color is changing and I would like to implement keyboard input eventually to select with keyboard instead of mouse only." />
     <MESSAGE value="Testing commit function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testing commit function" />
+    <MESSAGE value="Adjusted StartMenuState.py to work properly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adjusted StartMenuState.py to work properly" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
