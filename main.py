@@ -1,10 +1,15 @@
 import arcade
 
 from Constants import Constants
+from GameData import GameData
 from InputManager import InputManager
 from GameStateManager import GameStateManager
 
 # Static variables
+# -Stores a reference to an instance of the GameData class, which is used to store
+# game data that persists across multiple menus and settings.
+#sessionData = GameData()
+
 # -Game state manager (manages program/game flow and keeps track of the
 # active game state)
 gameStateMgr = GameStateManager()

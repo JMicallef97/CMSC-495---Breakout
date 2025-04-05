@@ -1,3 +1,4 @@
+from GameData import GameData
 from GameState import GameState
 from StartMenuState import StartMenuState
 from TestMenuState import TestMenuState

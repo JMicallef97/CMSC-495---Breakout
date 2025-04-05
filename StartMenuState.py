@@ -2,7 +2,11 @@ import arcade
 import arcade.gui
 from arcade.gui.widgets.slider import UISlider
 from arcade.gui.events import UIOnChangeEvent
+
+from GameData import GameData
 from GameState import GameState
+from GameView import GameView
+
 
 # ----------------------------
 # Main Menu State and View
@@ -37,11 +41,11 @@ class StartMenuState(GameState):
         def on_click(event):
             self.manager.disable()
             if option == "Start Game":
-                view = PreGameStateView()
+                view = GameView(PreGameState())  #PreGameStateView()
             elif option == "Adjust difficulty":
-                view = AdjustDifficultyStateView()
+                view = GameView(AdjustDifficultyState())  #AdjustDifficultyStateView()
             elif option == "High Scores":
-                view = HighScoresStateView()
+                view = GameView(HighScoresState()) #HighScoresStateView()
             arcade.get_window().show_view(view)
         return on_click
 
@@ -50,28 +54,6 @@ class StartMenuState(GameState):
 
     def drawState(self):
         self.manager.draw()
-
-
-class MainMenuView(arcade.View):
-    def __init__(self):
-        super().__init__()
-        self.state = StartMenuState()
-
-    def on_draw(self):
-        self.clear()
-        self.state.drawState()
-
-    def on_update(self, delta_time):
-        self.state.updateState()
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_press(x, y, button, modifiers)
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_release(x, y, button, modifiers)
-
-    def on_hide_view(self):
-        self.state.manager.disable()
 
 
 # ----------------------------
@@ -114,39 +96,18 @@ class PreGameState(GameState):
 
     def on_click_back(self, event):
         self.manager.disable()
-        arcade.get_window().show_view(MainMenuView())
+        #arcade.get_window().show_view(MainMenuView())
+        arcade.get_window().show_view(GameView(StartMenuState()))
 
     def on_click_next(self, event):
         self.manager.disable()
-        arcade.get_window().show_view(GameStartStateView())
+        arcade.get_window().show_view(GameView(GameStartState()))
 
     def updateState(self):
         pass
 
     def drawState(self):
         self.manager.draw()
-
-
-class PreGameStateView(arcade.View):
-    def __init__(self):
-        super().__init__()
-        self.state = PreGameState()
-
-    def on_draw(self):
-        self.clear()
-        self.state.drawState()
-
-    def on_update(self, delta_time):
-        self.state.updateState()
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_press(x, y, button, modifiers)
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_release(x, y, button, modifiers)
-
-    def on_hide_view(self):
-        self.state.manager.disable()
 
 
 # ----------------------------
@@ -173,35 +134,14 @@ class GameStartState(GameState):
 
     def on_click_back(self, event):
         self.manager.disable()
-        arcade.get_window().show_view(PreGameStateView())
+        #arcade.get_window().show_view(PreGameStateView())
+        arcade.get_window().show_view(GameView(StartMenuState()))
 
     def updateState(self):
         pass
 
     def drawState(self):
         self.manager.draw()
-
-
-class GameStartStateView(arcade.View):
-    def __init__(self):
-        super().__init__()
-        self.state = GameStartState()
-
-    def on_draw(self):
-        self.clear()
-        self.state.drawState()
-
-    def on_update(self, delta_time):
-        self.state.updateState()
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_press(x, y, button, modifiers)
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_release(x, y, button, modifiers)
-
-    def on_hide_view(self):
-        self.state.manager.disable()
 
 
 # ----------------------------
@@ -212,7 +152,6 @@ class AdjustDifficultyState(GameState):
         super().__init__("Adjust Difficulty")
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
-
         self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
         self.back_button.on_click = self.on_click_back
         self.back_anchor = arcade.gui.UIAnchorLayout()
@@ -226,14 +165,20 @@ class AdjustDifficultyState(GameState):
         paddle_width_desc = arcade.gui.UILabel(
             text="Adjust paddle width:", font_size=20, text_color=arcade.color.WHITE
         )
-        self.paddle_width_slider = UISlider(value=5, width=300, height=50, min_value=1, max_value=10, step=1)
+        # Initialize the paddle width difficulty slider with the paddle width from the
+        # game data store class.
+        self.paddle_width_slider = UISlider(value=GameData.difficulty_paddleWidth, width=300, height=50, min_value=1, max_value=10, step=1)
         paddle_width_value_label = arcade.gui.UILabel(
             text=f"{int(self.paddle_width_slider.value)}", font_size=16, text_color=arcade.color.WHITE
         )
+        
         @self.paddle_width_slider.event("on_change")
         def on_change_pw(event: UIOnChangeEvent):
             paddle_width_value_label.text = f"{int(self.paddle_width_slider.value)}"
             paddle_width_value_label.fit_content()
+            # Write newly adjusted value to the game data class
+            GameData.difficulty_paddleWidth = int(f"{int(self.paddle_width_slider.value)}")
+
         paddle_width_hbox = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
         paddle_width_hbox.add(self.paddle_width_slider)
         paddle_width_hbox.add(paddle_width_value_label)
@@ -274,6 +219,7 @@ class AdjustDifficultyState(GameState):
         def on_change_bs(event: UIOnChangeEvent):
             ball_speed_value_label.text = f"{int(self.ball_speed_slider.value)}"
             ball_speed_value_label.fit_content()
+
         ball_speed_hbox = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
         ball_speed_hbox.add(self.ball_speed_slider)
         ball_speed_hbox.add(ball_speed_value_label)
@@ -288,35 +234,14 @@ class AdjustDifficultyState(GameState):
 
     def on_click_back(self, event):
         self.manager.disable()
-        arcade.get_window().show_view(MainMenuView())
+        #arcade.get_window().show_view(MainMenuView())
+        arcade.get_window().show_view(GameView(StartMenuState()))
 
     def updateState(self):
         pass
 
     def drawState(self):
         self.manager.draw()
-
-
-class AdjustDifficultyStateView(arcade.View):
-    def __init__(self):
-        super().__init__()
-        self.state = AdjustDifficultyState()
-
-    def on_draw(self):
-        self.clear()
-        self.state.drawState()
-
-    def on_update(self, delta_time):
-        self.state.updateState()
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_press(x, y, button, modifiers)
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_release(x, y, button, modifiers)
-
-    def on_hide_view(self):
-        self.state.manager.disable()
 
 
 # ----------------------------
@@ -353,32 +278,11 @@ class HighScoresState(GameState):
 
     def on_click_back(self, event):
         self.manager.disable()
-        arcade.get_window().show_view(MainMenuView())
+        #arcade.get_window().show_view(MainMenuView())
+        arcade.get_window().show_view(GameView(StartMenuState()))
 
     def updateState(self):
         pass
 
     def drawState(self):
         self.manager.draw()
-
-
-class HighScoresStateView(arcade.View):
-    def __init__(self):
-        super().__init__()
-        self.state = HighScoresState()
-
-    def on_draw(self):
-        self.clear()
-        self.state.drawState()
-
-    def on_update(self, delta_time):
-        self.state.updateState()
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_press(x, y, button, modifiers)
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        self.state.manager.on_mouse_release(x, y, button, modifiers)
-
-    def on_hide_view(self):
-        self.state.manager.disable()
