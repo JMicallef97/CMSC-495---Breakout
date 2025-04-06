@@ -1,5 +1,6 @@
 from GameData import GameData
 from GameState import GameState
+from GameStartState import GameStartState
 from StartMenuState import StartMenuState
 from TestMenuState import TestMenuState
 
@@ -22,6 +23,8 @@ class GameStateManager:
 
         # Main Menu (the main menu of the game)
         self.programGameStates["Main Menu"] = StartMenuState()
+
+        self.programGameStates["Game Start"] = GameStartState()
 
         # etc.. add other game states (game, game over, high score, etc) here
 
