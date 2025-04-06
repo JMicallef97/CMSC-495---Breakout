@@ -1,288 +1,61 @@
 import arcade
 import arcade.gui
-from arcade.gui.widgets.slider import UISlider
-from arcade.gui.events import UIOnChangeEvent
-
-from GameData import GameData
-from GameState import GameState
 from GameView import GameView
+from HowToPlayState import HowToPlayState
+from AdjustDifficultyState import AdjustDifficultyState
+from HighScoresState import HighScoresState
+from GameState import GameState
 
-
-# ----------------------------
-# Main Menu State and View
-# ----------------------------
+# This class encapsulates the main menu UI and provides options for starting the game,
+# adjusting difficulty, or viewing high scores.
 class StartMenuState(GameState):
+    # Initialize the StartMenuState instance.
     def __init__(self):
         super().__init__("Main Menu")
-        self.manager = arcade.gui.UIManager()
+        self.manager = arcade.gui.UIManager()  # Create UIManager to handle UI elements.
         self.manager.enable()
 
+        # Create a vertical layout for the menu items.
         self.v_box = arcade.gui.UIBoxLayout(vertical=True, space_between=20)
 
+        # Create and add the main title label.
         title_label = arcade.gui.UILabel(
             text="Main Screen", font_size=40, text_color=arcade.color.WHITE
         )
         self.v_box.add(title_label)
-        self.v_box.add(arcade.gui.UISpace(height=50))
+        self.v_box.add(arcade.gui.UISpace(height=50))  # Add spacing below the title.
 
-        # Options: Start Game, Adjust difficulty, High Scores
+        # Define the menu options.
         self.options = ["Start Game", "Adjust difficulty", "High Scores"]
 
+        # Create a button for each menu option.
         for option in self.options:
             button = arcade.gui.UIFlatButton(text=option, width=200)
             self.v_box.add(button)
             button.on_click = self.make_option_click_handler(option)
 
+        # Center the vertical layout on the screen.
         self.anchor = arcade.gui.UIAnchorLayout()
         self.anchor.add(anchor_x="center_x", anchor_y="center_y", child=self.v_box)
         self.manager.add(self.anchor)
 
+    # Create an event handler for menu button clicks.
     def make_option_click_handler(self, option):
         def on_click(event):
-            self.manager.disable()
+            self.manager.disable()  # Disable UI to avoid residual events.
             if option == "Start Game":
-                view = GameView(PreGameState())  #PreGameStateView()
+                view = GameView(HowToPlayState())
             elif option == "Adjust difficulty":
-                view = GameView(AdjustDifficultyState())  #AdjustDifficultyStateView()
+                view = GameView(AdjustDifficultyState())
             elif option == "High Scores":
-                view = GameView(HighScoresState()) #HighScoresStateView()
+                view = GameView(HighScoresState())
             arcade.get_window().show_view(view)
         return on_click
 
+    # Update the state (no dynamic updates required in the main menu).
     def updateState(self):
         pass
 
-    def drawState(self):
-        self.manager.draw()
-
-
-# ----------------------------
-# Pre-Game State (How-To-Play Instructions) and View
-# ----------------------------
-class PreGameState(GameState):
-    def __init__(self):
-        super().__init__("Pre Game")
-        self.manager = arcade.gui.UIManager()
-        self.manager.enable()
-
-        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
-        self.back_button.on_click = self.on_click_back
-        self.back_anchor = arcade.gui.UIAnchorLayout()
-        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
-        self.manager.add(self.back_anchor)
-
-        self.next_button = arcade.gui.UIFlatButton(text="Next", width=100)
-        self.next_button.on_click = self.on_click_next
-        self.next_anchor = arcade.gui.UIAnchorLayout()
-        self.next_anchor.add(anchor_x="right", anchor_y="top", child=self.next_button)
-        self.manager.add(self.next_anchor)
-
-        instructions = (
-            "How To Play:\n"
-            "- Use arrow keys to move your paddle.\n"
-            "- Bounce the ball to break bricks.\n"
-            "- Don't let the ball fall!"
-        )
-        self.info_label = arcade.gui.UILabel(
-            text=instructions,
-            font_size=20,
-            text_color=arcade.color.WHITE,
-            multiline=True,
-            width=400
-        )
-        self.center_anchor = arcade.gui.UIAnchorLayout()
-        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.info_label)
-        self.manager.add(self.center_anchor)
-
-    def on_click_back(self, event):
-        self.manager.disable()
-        #arcade.get_window().show_view(MainMenuView())
-        arcade.get_window().show_view(GameView(StartMenuState()))
-
-    def on_click_next(self, event):
-        self.manager.disable()
-        arcade.get_window().show_view(GameView(GameStartState()))
-
-    def updateState(self):
-        pass
-
-    def drawState(self):
-        self.manager.draw()
-
-
-# ----------------------------
-# Game Start State and View (Actual Start Game Page)
-# ----------------------------
-class GameStartState(GameState):
-    def __init__(self):
-        super().__init__("Game Start")
-        self.manager = arcade.gui.UIManager()
-        self.manager.enable()
-
-        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
-        self.back_button.on_click = self.on_click_back
-        self.back_anchor = arcade.gui.UIAnchorLayout()
-        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
-        self.manager.add(self.back_anchor)
-
-        self.info_label = arcade.gui.UILabel(
-            text="Starting the game...", font_size=30, text_color=arcade.color.WHITE
-        )
-        self.center_anchor = arcade.gui.UIAnchorLayout()
-        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.info_label)
-        self.manager.add(self.center_anchor)
-
-    def on_click_back(self, event):
-        self.manager.disable()
-        #arcade.get_window().show_view(PreGameStateView())
-        arcade.get_window().show_view(GameView(StartMenuState()))
-
-    def updateState(self):
-        pass
-
-    def drawState(self):
-        self.manager.draw()
-
-
-# ----------------------------
-# Adjust Difficulty State and View (Using UISlider)
-# ----------------------------
-class AdjustDifficultyState(GameState):
-    def __init__(self):
-        super().__init__("Adjust Difficulty")
-        self.manager = arcade.gui.UIManager()
-        self.manager.enable()
-        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
-        self.back_button.on_click = self.on_click_back
-        self.back_anchor = arcade.gui.UIAnchorLayout()
-        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
-        self.manager.add(self.back_anchor)
-
-        # Vertical layout to hold the slider groups.
-        self.slider_box = arcade.gui.UIBoxLayout(vertical=True, space_between=20)
-
-        # --- Paddle Width Slider ---
-        paddle_width_desc = arcade.gui.UILabel(
-            text="Adjust paddle width:", font_size=20, text_color=arcade.color.WHITE
-        )
-        # Initialize the paddle width difficulty slider with the paddle width from the
-        # game data store class.
-        self.paddle_width_slider = UISlider(value=GameData.difficulty_paddleWidth, width=300, height=50, min_value=1, max_value=10, step=1)
-        paddle_width_value_label = arcade.gui.UILabel(
-            text=f"{int(self.paddle_width_slider.value)}", font_size=16, text_color=arcade.color.WHITE
-        )
-        
-        @self.paddle_width_slider.event("on_change")
-        def on_change_pw(event: UIOnChangeEvent):
-            paddle_width_value_label.text = f"{int(self.paddle_width_slider.value)}"
-            paddle_width_value_label.fit_content()
-            # Write newly adjusted value to the game data class
-            GameData.difficulty_paddleWidth = int(f"{int(self.paddle_width_slider.value)}")
-
-        paddle_width_hbox = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
-        paddle_width_hbox.add(self.paddle_width_slider)
-        paddle_width_hbox.add(paddle_width_value_label)
-        paddle_width_box = arcade.gui.UIBoxLayout(vertical=True, space_between=5)
-        paddle_width_box.add(paddle_width_desc)
-        paddle_width_box.add(paddle_width_hbox)
-        self.slider_box.add(paddle_width_box)
-
-        # --- Paddle Movement Speed Slider ---
-        paddle_speed_desc = arcade.gui.UILabel(
-            text="Adjust paddle movement speed:", font_size=20, text_color=arcade.color.WHITE
-        )
-        self.paddle_speed_slider = UISlider(value=5, width=300, height=50, min_value=1, max_value=10, step=1)
-        paddle_speed_value_label = arcade.gui.UILabel(
-            text=f"{int(self.paddle_speed_slider.value)}", font_size=16, text_color=arcade.color.WHITE
-        )
-        @self.paddle_speed_slider.event("on_change")
-        def on_change_ps(event: UIOnChangeEvent):
-            paddle_speed_value_label.text = f"{int(self.paddle_speed_slider.value)}"
-            paddle_speed_value_label.fit_content()
-        paddle_speed_hbox = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
-        paddle_speed_hbox.add(self.paddle_speed_slider)
-        paddle_speed_hbox.add(paddle_speed_value_label)
-        paddle_speed_box = arcade.gui.UIBoxLayout(vertical=True, space_between=5)
-        paddle_speed_box.add(paddle_speed_desc)
-        paddle_speed_box.add(paddle_speed_hbox)
-        self.slider_box.add(paddle_speed_box)
-
-        # --- Ball Movement Speed Slider ---
-        ball_speed_desc = arcade.gui.UILabel(
-            text="Adjust ball movement speed:", font_size=20, text_color=arcade.color.WHITE
-        )
-        self.ball_speed_slider = UISlider(value=5, width=300, height=50, min_value=1, max_value=10, step=1)
-        ball_speed_value_label = arcade.gui.UILabel(
-            text=f"{int(self.ball_speed_slider.value)}", font_size=16, text_color=arcade.color.WHITE
-        )
-        @self.ball_speed_slider.event("on_change")
-        def on_change_bs(event: UIOnChangeEvent):
-            ball_speed_value_label.text = f"{int(self.ball_speed_slider.value)}"
-            ball_speed_value_label.fit_content()
-
-        ball_speed_hbox = arcade.gui.UIBoxLayout(vertical=False, space_between=10)
-        ball_speed_hbox.add(self.ball_speed_slider)
-        ball_speed_hbox.add(ball_speed_value_label)
-        ball_speed_box = arcade.gui.UIBoxLayout(vertical=True, space_between=5)
-        ball_speed_box.add(ball_speed_desc)
-        ball_speed_box.add(ball_speed_hbox)
-        self.slider_box.add(ball_speed_box)
-
-        self.center_anchor = arcade.gui.UIAnchorLayout()
-        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.slider_box)
-        self.manager.add(self.center_anchor)
-
-    def on_click_back(self, event):
-        self.manager.disable()
-        #arcade.get_window().show_view(MainMenuView())
-        arcade.get_window().show_view(GameView(StartMenuState()))
-
-    def updateState(self):
-        pass
-
-    def drawState(self):
-        self.manager.draw()
-
-
-# ----------------------------
-# High Scores State and View
-# ----------------------------
-class HighScoresState(GameState):
-    def __init__(self):
-        super().__init__("High Scores")
-        self.manager = arcade.gui.UIManager()
-        self.manager.enable()
-
-        self.back_button = arcade.gui.UIFlatButton(text="Back", width=100)
-        self.back_button.on_click = self.on_click_back
-        self.back_anchor = arcade.gui.UIAnchorLayout()
-        self.back_anchor.add(anchor_x="left", anchor_y="top", child=self.back_button)
-        self.manager.add(self.back_anchor)
-
-        scores = (
-            "High Scores:\n"
-            "1. AAA - 10000\n"
-            "2. BBB - 8000\n"
-            "3. CCC - 6000"
-        )
-        self.info_label = arcade.gui.UILabel(
-            text=scores,
-            font_size=20,
-            text_color=arcade.color.WHITE,
-            multiline=True,
-            width=400
-        )
-        self.center_anchor = arcade.gui.UIAnchorLayout()
-        self.center_anchor.add(anchor_x="center", anchor_y="center", child=self.info_label)
-        self.manager.add(self.center_anchor)
-
-    def on_click_back(self, event):
-        self.manager.disable()
-        #arcade.get_window().show_view(MainMenuView())
-        arcade.get_window().show_view(GameView(StartMenuState()))
-
-    def updateState(self):
-        pass
-
+    # Draw the main menu UI.
     def drawState(self):
         self.manager.draw()

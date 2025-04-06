@@ -29,7 +29,7 @@ class GameData:
 
     # Constructor for the GameData class, initializes the starting values
     # for each variable.
-    def __init__(self, value):
+    def __init__(self, value=1):
 
         # Ensure class will not be reinitialized
         if not hasattr(self, 'initialized'):
@@ -48,3 +48,19 @@ class GameData:
     # Gets the paddle width difficulty in this GameData instance.
     def getPaddleWidthDifficulty(self):
         return self.difficulty_paddleWidth
+
+    # Sets the ball speed difficulty in this GameData instance.
+    def setBallSpeedDifficulty(self, newBallSpeed):
+        self.difficulty_ballSpeed = newBallSpeed
+
+    # Gets the ball speed difficulty in this GameData instance.
+    def getBallSpeedDifficulty(self):
+        return self.difficulty_ballSpeed
+
+    # Sets the paddle movement speed difficulty in this GameData instance.
+    def setPaddleMoveSpeedDifficulty(self, newPaddleSpeed):
+        self.difficulty_paddleMoveSpeed = newPaddleSpeed
+
+    # Gets the paddle movement speed difficulty in this GameData instance.
+    def getPaddleMoveSpeedDifficulty(self):
+        return self.difficulty_paddleMoveSpeed
