@@ -1,7 +1,10 @@
 import arcade
 import arcade.gui
+from Constants import Constants
+from GameManager import GameManager
 from GameState import GameState
 from GameView import GameView
+from InputManager import InputManager
 
 # Represents the game start screen that displays a "Starting the game..." message.
 # This screen will be replaced with the actual game.
@@ -9,6 +12,8 @@ class GameStartState(GameState):
     # Initialize the GameStartState instance.
     def __init__(self):
         super().__init__("Game Start")
+        self.game_manager = GameManager(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT)
+
         self.manager = arcade.gui.UIManager()  # Create UIManager.
         self.manager.enable()
 
@@ -35,8 +40,11 @@ class GameStartState(GameState):
 
     # Update the state (no dynamic updates needed).
     def updateState(self):
+        self.game_manager.update()
         pass
 
     # Draw the Game Start UI.
     def drawState(self):
+        self.game_manager.draw()
         self.manager.draw()
+

@@ -1,9 +1,11 @@
 import arcade
 import math
 import random
-from game.Ball import Ball
-from game.Paddle import Paddle
-from game.Brick import Brick
+
+from Ball import Ball
+from Paddle import Paddle
+from Brick import Brick
+from InputManager import InputManager
 
 class GameManager:
     """
@@ -38,10 +40,6 @@ class GameManager:
         self.game_paused = False
         self.ball_attached = True  # Ball starts on paddle
 
-        # Input tracking
-        self.holding_left = False
-        self.holding_right = False
-
     def create_bricks(self) -> None:
         """
         Creates a 5-row by 10-column grid of bricks and adds them to the SpriteList.
@@ -66,8 +64,7 @@ class GameManager:
         Ends the game if no lives remain.
         """
         self.ball.center_x = self.paddle.center_x
-        ball_above_paddle = (self.paddle.height / 2) + (self.ball.height / 2)
-        self.ball.center_y = self.paddle.center_y + ball_above_paddle
+        self.ball.center_y = self.paddle.center_y + (self.paddle.height / 2) + (self.ball.height / 2)
         self.ball.change_x = 0
         self.ball.change_y = 0
         self.lives -= 1
@@ -91,82 +88,55 @@ class GameManager:
         if self.game_paused:
             return
 
-        # Handle continuous paddle movement
-        if self.holding_left:
+        # Handle input via InputManager
+        if InputManager.isKeyPressed.get(arcade.key.A, False):
             self.paddle.move_left()
-        if self.holding_right:
+        if InputManager.isKeyPressed.get(arcade.key.D, False):
             self.paddle.move_right()
+        if InputManager.isKeyPressed.get(arcade.key.P, False):
+            self.game_paused = not self.game_paused
+            InputManager.isKeyPressed[arcade.key.P] = False  # prevent repeated toggling
+        if InputManager.isKeyPressed.get(arcade.key.Q, False):
+            print("Quitting game.")
+            arcade.close_window()
 
         # Keep ball attached to paddle before launch
         if self.ball_attached:
             self.ball.center_x = self.paddle.center_x
-            ball_above_paddle = (self.paddle.height / 2) + (self.ball.height / 2)
-            self.ball.center_y = self.paddle.center_y + ball_above_paddle
+            self.ball.center_y = self.paddle.center_y + (self.paddle.height / 2) + (self.ball.height / 2)
+
+            # Launch the ball if mouse button is pressed
+            if InputManager.isLeftMouseButtonPressed:
+                self.launch_ball()
             return
 
-        # Move the ball once it's launched
+        # Move the ball
         self.ball.move_ball()
 
-        # Check for collision with paddle
+        # Paddle collision
         if arcade.check_for_collision(self.ball, self.paddle):
             self.ball.change_y *= -1
 
-        # Check for collision with bricks
+        # Brick collision
         hit_list = arcade.check_for_collision_with_list(self.ball, self.bricks)
         if hit_list:
-            brick = hit_list[0]
-            brick.destroy()
+            hit_list[0].destroy()
             self.ball.change_y *= -1
             self.score += 10
 
-        # Ball fell below the screen
+        # Ball fell below screen
         if self.ball.center_y <= 0:
             self.reset_game()
 
-    def on_key_press(self, symbol: int, modifiers: int) -> None:
+    def launch_ball(self) -> None:
         """
-        Handles key press events to control paddle movement and toggle pause/quit.
+        Launches the ball at a random upward angle from the paddle.
         """
-        if symbol == arcade.key.A:
-            self.holding_left = True
-        elif symbol == arcade.key.D:
-            self.holding_right = True
-        elif symbol == arcade.key.P:
-            self.game_paused = not self.game_paused
-        elif symbol == arcade.key.Q:
-            self.quit_game()
-
-    def on_key_release(self, symbol: int, modifiers: int) -> None:
-        """
-        Handles key release events to stop paddle movement.
-        """
-        if symbol == arcade.key.A:
-            self.holding_left = False
-        elif symbol == arcade.key.D:
-            self.holding_right = False
-
-    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int) -> None:
-        """
-        Handles mouse click to launch the ball from the paddle with a random upward angle.
-        """
-        if self.ball_attached:
-            self.ball_attached = False
-
-            # Choose a random upward angle between 30° and 150°
-            angle_deg = random.uniform(30, 150)
-            angle_rad = math.radians(angle_deg)
-
-            speed = 5
-            self.ball.change_x = speed * math.cos(angle_rad)
-            self.ball.change_y = speed * math.sin(angle_rad)
-
-    @staticmethod
-    def quit_game() -> None:
-        """
-        Quits the game and closes the window.
-        """
-        print("Exiting Game")
-        arcade.close_window()
+        self.ball_attached = False
+        angle_rad = math.radians(random.uniform(30, 150))
+        speed = 5
+        self.ball.change_x = speed * math.cos(angle_rad)
+        self.ball.change_y = speed * math.sin(angle_rad)
 
     def draw(self) -> None:
         """
