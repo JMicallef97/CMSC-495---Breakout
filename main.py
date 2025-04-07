@@ -1,9 +1,8 @@
 import arcade
 
 from Constants import Constants
-from GameData import GameData
-from InputManager import InputManager
 from GameStateManager import GameStateManager
+from InputManager import InputManager
 
 # Static variables
 # -Stores a reference to an instance of the GameData class, which is used to store

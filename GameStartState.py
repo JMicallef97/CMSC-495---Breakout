@@ -1,10 +1,10 @@
 import arcade
 import arcade.gui
+
 from Constants import Constants
 from GameManager import GameManager
 from GameState import GameState
 from GameView import GameView
-from InputManager import InputManager
 
 # Represents the game start screen that displays a "Starting the game..." message.
 # This screen will be replaced with the actual game.
