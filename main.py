@@ -81,23 +81,6 @@ class GameView(arcade.View):
         InputManager.mouseCoordY = y
         pass
 
-    # Used to detect and handle mouse clicks
-    def on_mouse_press(self, x, y, button, key_modifiers):
-        """Called when the user presses a mouse button."""
-        # Check if the left mouse button was pressed
-        if button is arcade.MOUSE_BUTTON_LEFT:
-            # change the state of isLeftMouseButtonPressed to true (pressed)
-            InputManager.isLeftMouseButtonPressed = True
-
-
-    # Used to detect and handle releasing mouse buttons
-    def on_mouse_release(self, x, y, button, key_modifiers):
-        """Called when a user releases a mouse button."""
-        # Check if the left mouse button was released
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            # change the state of isLeftMouseButtonReleased to true (pressed)
-            InputManager.isLeftMouseButtonPressed = False
-
 
 
 # Contains the entry point of the application/game, which is used to set up the game

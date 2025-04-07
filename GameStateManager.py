@@ -1,6 +1,6 @@
 from GameData import GameData
 from GameState import GameState
-from GameStartState import GameStartState
+from BreakoutGameState import GameStartState
 from StartMenuState import StartMenuState
 from TestMenuState import TestMenuState
 

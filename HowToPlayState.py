@@ -54,7 +54,7 @@ class HowToPlayState(GameState):
     # Handle the next button click event to proceed to the Game Start screen.
     def on_click_next(self, event):
         self.manager.disable()
-        import GameStartState  # Local import.
+        import BreakoutGameState  # Local import.
         arcade.get_window().show_view(GameView(GameStartState.GameStartState()))
 
     # Update the state (no periodic updates required).
