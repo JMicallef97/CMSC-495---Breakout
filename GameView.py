@@ -60,6 +60,13 @@ class GameView(arcade.View):
             # change the state of isLeftMouseButtonReleased to true (pressed)
             InputManager.isLeftMouseButtonPressed = False
 
+    # Used to detect and handle mouse motion
+    def on_mouse_motion(self, x, y, delta_x, delta_y):
+        """Called whenever the mouse moves."""
+        # Update the moues X and Y coordinates
+        InputManager.mouseCoordX = x
+        InputManager.mouseCoordY = y
+
     # Runs the code to disable interaction with this game view when the view is
     # hidden [back button pressed] to avoid buggy behavior.
     def on_hide_view(self):

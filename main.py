@@ -50,32 +50,6 @@ class GameView(arcade.View):
         # Draw the active game state graphics
         gameStateMgr.drawActiveGameState()
 
-    # Used to detect and handle key presses
-    def on_key_press(self, key, key_modifiers):
-        """ Called whenever a key on the keyboard is pressed.
-        For a full list of keys, see: https://api.arcade.academy/en/latest/arcade.key.html """
-        # check if the pressed key is contained within the isKeyPressed dictionary
-        if key in InputManager.isKeyPressed:
-            # change the state of the key to true (pressed)
-            InputManager.isKeyPressed[key] = True
-
-
-    # Used to detect and handle key releases
-    def on_key_release(self, key, key_modifiers):
-        """Called whenever the user lets off a previously pressed key."""
-        # check if the released key is contained within the isKeyPressed dictionary
-        if key in InputManager.isKeyPressed:
-            # change the state of the key to false (released)
-            InputManager.isKeyPressed[key] = False
-
-
-    # Used to detect and handle mouse motion
-    def on_mouse_motion(self, x, y, delta_x, delta_y):
-        """Called whenever the mouse moves."""
-        # Update the moues X and Y coordinates
-        InputManager.mouseCoordX = x
-        InputManager.mouseCoordY = y
-
 
 
 # Contains the entry point of the application/game, which is used to set up the game
@@ -83,20 +57,18 @@ class GameView(arcade.View):
 def main():
 
     """ Main function """
-
     #   Create a window class. This is what actually shows up on screen
     window = arcade.Window(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, Constants.WINDOW_TITLE)
 
-    # Create and setup the GameView
+    # Create and setup the starting game view
     game = GameView()
 
-    # Show GameView on screen
+    # Show the game window to the screen
     window.show_view(game)
 
     # Start the arcade game loop (main game loop)
     arcade.run()
 
-# Used to start the application
+# Entry point for the program, used to start the application
 if __name__ == "__main__":
-
     main()
