@@ -35,10 +35,6 @@ class GameView(arcade.View):
         #gameStateMgr.setGameState("Test Menu")
         gameStateMgr.setGameState("Main Menu")
 
-    # Resets the game to its initial state
-    def reset(self):
-        pass
-
     # Contains code to update the game
     def on_update(self, delta_time):
         """All the logic to move, and the game logic goes here.
@@ -79,7 +75,6 @@ class GameView(arcade.View):
         # Update the moues X and Y coordinates
         InputManager.mouseCoordX = x
         InputManager.mouseCoordY = y
-        pass
 
 
 

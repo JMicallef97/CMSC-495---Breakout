@@ -101,7 +101,7 @@ class AdjustDifficultyState(GameState):
               f"Paddle Move Speed: {GameData().difficulty_paddleMoveSpeed}, "
               f"Ball Speed: {GameData().difficulty_ballSpeed}")
         self.manager.disable()
-        import StartMenuState
+        import MainMenuState
         arcade.get_window().show_view(GameView(StartMenuState.StartMenuState()))
 
     def updateState(self):

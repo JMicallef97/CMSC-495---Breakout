@@ -50,7 +50,7 @@ class HighScoresState(GameState):
     # Handle the back button click event to return to the main menu.
     def on_click_back(self, event):
         self.manager.disable()
-        import StartMenuState
+        import MainMenuState
         arcade.get_window().show_view(GameView(StartMenuState.StartMenuState()))
 
     # Update the state (no dynamic updates needed).
