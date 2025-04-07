@@ -3,17 +3,16 @@ This project is a recreation of the classic 1976 game "Breakout!" by Atari (http
 This project is being developed to fulfill University of Maryland CMSC 495 coursework requirements.
 
 # Contributors
+<pre>
 Jacob Micallef
 Christopher Nester
 Sung Kim
+</pre>
 
-# Development Tools
+# Tools & Dependencies
 <pre>
 IDE:           Pycharm Community Edition 2024.3.5  
 Language:      Python 3.13  
-</pre>
-
-# Dependencies
 Packages:      arcade 3.0.2  
                attrs 25.3.0  
                cffi 1.17.1  
@@ -24,3 +23,4 @@ Packages:      arcade 3.0.2
                pymunk 6.9.0  
                pytiled_parser 2.2.9   
                typing_extensions 4.13.0  
+</pre>
