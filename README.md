@@ -15,10 +15,10 @@ Language:      Python 3.13
 Packages:      arcade 3.0.2  
                attrs 25.3.0  
                cffi 1.17.1  
-               pillow 11.0.0
-               pip 24.2
-               pycparser 2.22
-               pyglet 2.1.3
-               pymunk 6.9.0
-               pytiled_parser 2.2.9
-               typing_extensions 4.13.0
+               pillow 11.0.0  
+               pip 24.2  
+               pycparser 2.22  
+               pyglet 2.1.3  
+               pymunk 6.9.0  
+               pytiled_parser 2.2.9   
+               typing_extensions 4.13.0  
