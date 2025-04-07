@@ -8,13 +8,13 @@ Christopher Nester
 Sung Kim
 
 # Development Tools
-IDE:           Pycharm Community Edition 2024.3.5
-Language:      Python 3.13
+IDE:           Pycharm Community Edition 2024.3.5  
+Language:      Python 3.13  
 
 # Dependencies
-Packages:      arcade 3.0.2
-               attrs 25.3.0
-               cffi 1.17.1
+Packages:      arcade 3.0.2  
+               attrs 25.3.0  
+               cffi 1.17.1  
                pillow 11.0.0
                pip 24.2
                pycparser 2.22
