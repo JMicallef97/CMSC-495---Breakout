@@ -1,21 +1,23 @@
 import arcade
 
 from Constants import Constants
-from GameStateManager import GameStateManager
+from GameView import GameView
 from InputManager import InputManager
-
-# Static variables
-# -Stores a reference to an instance of the GameData class, which is used to store
-# game data that persists across multiple menus and settings.
-#sessionData = GameData()
-
-# -Game state manager (manages program/game flow and keeps track of the
-# active game state)
-gameStateMgr = GameStateManager()
+from MainMenuState import MainMenuState
 
 # This class contains code used to manage user input, game logic and rendering,
 # and the game window.
-class GameView(arcade.View):
+class ProgramView(arcade.View):
+
+    # Instance variables
+    # -Boolean, used to check if the main menu view has been initialized and displayed
+    # or not.
+    isMainMenuViewShown = False
+
+    # -Stores a reference to a MainMenuState instance, which contains code to
+    #  display and manage the main menu of the game (the starting state for the
+    #  application).
+    mainMenuState = None
 
     # Constructor for the game class
     def __init__(self):
@@ -28,29 +30,28 @@ class GameView(arcade.View):
         InputManager.isKeyPressed[arcade.key.P] = False   # used to pause the game.
         InputManager.isKeyPressed[arcade.key.Q] = False   # used to trigger quitting the game.
 
-        # initialize the game state classes in the game state manager
-        gameStateMgr.initGameStates()
-
-        # set the starting game state here
-        #gameStateMgr.setGameState("Test Menu")
-        gameStateMgr.setGameState("Main Menu")
-
     # Contains code to update the game
     def on_update(self, delta_time):
         """All the logic to move, and the game logic goes here.
         Normally, you'll call update() on the sprite lists that need it. """
-        # Update the active game state
-        gameStateMgr.updateActiveGameState()
+        # Check if the main menu has been shown yet
+        if not self.isMainMenuViewShown:
+            # create the main menu view, and switch to it
+            self.mainMenuState = MainMenuState()
+            arcade.get_window().show_view(GameView(self.mainMenuState))
+            # update flag
+            self.isMainMenuViewShown = True
 
     # Contains code to draw the game to the screen
     def on_draw(self):
         # This command should happen before we start drawing. It will clear
         # the screen to the background color, and erase what we drew last frame.
         self.clear()
-        # Draw the active game state graphics
-        gameStateMgr.drawActiveGameState()
 
-
+        # Check if the main menu view is initialized and ready to be shown
+        if self.isMainMenuViewShown:
+            # Draw the main menu state graphics
+            self.mainMenuState.drawState()
 
 # Contains the entry point of the application/game, which is used to set up the game
 # program
@@ -61,7 +62,7 @@ def main():
     window = arcade.Window(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT, Constants.WINDOW_TITLE)
 
     # Create and setup the starting game view
-    game = GameView()
+    game = ProgramView()
 
     # Show the game window to the screen
     window.show_view(game)

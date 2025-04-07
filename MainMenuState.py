@@ -8,7 +8,7 @@ from GameState import GameState
 
 # This class encapsulates the main menu UI and provides options for starting the game,
 # adjusting difficulty, or viewing high scores.
-class StartMenuState(GameState):
+class MainMenuState(GameState):
     def __init__(self):
         # Initialize the base GameState with the name "Main Menu"
         super().__init__("Main Menu")

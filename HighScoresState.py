@@ -51,7 +51,7 @@ class HighScoresState(GameState):
     def on_click_back(self, event):
         self.manager.disable()
         import MainMenuState
-        arcade.get_window().show_view(GameView(StartMenuState.StartMenuState()))
+        arcade.get_window().show_view(GameView(MainMenuState.MainMenuState()))
 
     # Update the state (no dynamic updates needed).
     def updateState(self):

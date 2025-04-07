@@ -49,7 +49,7 @@ class HowToPlayState(GameState):
     def on_click_back(self, event):
         self.manager.disable()
         import MainMenuState  # Local import to break circular dependency.
-        arcade.get_window().show_view(GameView(StartMenuState.StartMenuState()))
+        arcade.get_window().show_view(GameView(MainMenuState.MainMenuState()))
 
     # Handle the next button click event to proceed to the Game Start screen.
     def on_click_next(self, event):

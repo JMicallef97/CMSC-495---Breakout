@@ -1,5 +1,7 @@
 import arcade
 
+# This class provides a blueprint for all program states (where a state represents a particular
+# function, like a menu or the actual gameplay).
 class GameState:
 
     # defines the name of the game state
