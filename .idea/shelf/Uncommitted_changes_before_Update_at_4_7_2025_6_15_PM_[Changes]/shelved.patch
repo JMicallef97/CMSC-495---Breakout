@@ -1,0 +1,170 @@
+Index: Ball.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import arcade\r\nimport os\r\n\r\nclass Ball(arcade.Sprite):\r\n    \"\"\"\r\n    Represents the ball in the Breakout game. Inherits from arcade.Sprite and handles movement,\r\n    texture loading, collision with screen boundaries, and position updates.\r\n    \"\"\"\r\n    def __init__(self):\r\n        \"\"\"\r\n        Initialize the Ball object with a texture, size, and movement properties.\r\n        Loads the ball texture from the Graphics folder relative to this file.\r\n        \"\"\"\r\n        # Construct full path to the ball texture\r\n        current_dir = os.path.dirname(os.path.abspath(__file__))\r\n        texture_path = os.path.normpath(os.path.join(current_dir, \"Graphics\", \"Ball.png\"))\r\n\r\n        print(\"Loading texture from:\", texture_path)\r\n\r\n        # Check if the texture file exists\r\n        if not os.path.exists(texture_path):\r\n            raise FileNotFoundError(f\"Texture not found at: {texture_path}\")\r\n\r\n        # Initialize the sprite with the texture\r\n        super().__init__(texture_path, scale=0.5)\r\n\r\n        # Define physical properties\r\n        self.radius = self.width // 2\r\n        self.center_x = 400  # Initial X position\r\n        self.center_y = 300  # Initial Y position\r\n        self.change_x = 4    # Horizontal speed\r\n        self.change_y = 4    # Vertical speed\r\n\r\n    def move_ball(self):\r\n        \"\"\"\r\n        Update the ball's position based on its velocity and reverse direction\r\n        if it hits the side or top walls of the screen.\r\n        \"\"\"\r\n        self.center_x += self.change_x\r\n        self.center_y += self.change_y\r\n\r\n        # Bounce off the left or right walls\r\n        if self.center_x <= self.radius or self.center_x >= 800 - self.radius:\r\n            self.change_x *= -1\r\n\r\n        # Bounce off the top wall\r\n        if self.center_y >= 600 - self.radius:\r\n            self.change_y *= -1\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Ball.py b/Ball.py
+--- a/Ball.py	(revision cd64b5d62107f5556d73ba4942d7bddc9badff1a)
++++ b/Ball.py	(date 1744063932912)
+@@ -28,8 +28,8 @@
+         self.radius = self.width // 2
+         self.center_x = 400  # Initial X position
+         self.center_y = 300  # Initial Y position
+-        self.change_x = 4    # Horizontal speed
+-        self.change_y = 4    # Vertical speed
++        self.change_x = 0    # Horizontal speed
++        self.change_y = 0    # Vertical speed
+ 
+     def move_ball(self):
+         """
+Index: Unit_Tests/TestInputManager.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Unit_Tests/TestInputManager.py b/Unit_Tests/TestInputManager.py
+new file mode 100644
+--- /dev/null	(date 1744061120954)
++++ b/Unit_Tests/TestInputManager.py	(date 1744061120954)
+@@ -0,0 +1,28 @@
++import arcade
++from InputManager import InputManager
++
++class TestInputManager:
++
++    def test_default_states(self):
++        assert InputManager.isLeftMouseButtonPressed is False
++        assert InputManager.isKeyPressed == {}
++        assert InputManager.mouseCoordX == 0
++        assert InputManager.mouseCoordY == 0
++
++    def test_key_press_tracking(self):
++        InputManager.isKeyPressed[arcade.key.A] = True
++        assert InputManager.isKeyPressed.get(arcade.key.A) is True
++        InputManager.isKeyPressed[arcade.key.A] = False
++        assert InputManager.isKeyPressed.get(arcade.key.A) is False
++
++    def test_mouse_button_tracking(self):
++        InputManager.isLeftMouseButtonPressed = True
++        assert InputManager.isLeftMouseButtonPressed is True
++        InputManager.isLeftMouseButtonPressed = False
++        assert InputManager.isLeftMouseButtonPressed is False
++
++    def test_mouse_coordinates(self):
++        InputManager.mouseCoordX = 150
++        InputManager.mouseCoordY = 300
++        assert InputManager.mouseCoordX == 150
++        assert InputManager.mouseCoordY == 300
+Index: Unit_Tests/TestBall.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Unit_Tests/TestBall.py b/Unit_Tests/TestBall.py
+new file mode 100644
+--- /dev/null	(date 1744063446204)
++++ b/Unit_Tests/TestBall.py	(date 1744063446204)
+@@ -0,0 +1,21 @@
++from Ball import Ball
++
++class TestBall:
++
++    def test_initial_position_and_velocity(self):
++        ball = Ball()
++        # Check if ball initializes with zero velocity
++        assert ball.change_x == 0
++        assert ball.change_y == 0
++
++    def test_move_ball_updates_position(self):
++        ball = Ball()
++        ball.center_x = 100
++        ball.center_y = 200
++        ball.change_x = 5
++        ball.change_y = -3
++
++        ball.move_ball()
++
++        assert ball.center_x == 105
++        assert ball.center_y == 197
+Index: Unit_Tests/TestBrick.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Unit_Tests/TestBrick.py b/Unit_Tests/TestBrick.py
+new file mode 100644
+--- /dev/null	(date 1744063431390)
++++ b/Unit_Tests/TestBrick.py	(date 1744063431390)
+@@ -0,0 +1,14 @@
++from Brick import Brick
++
++class TestBrick:
++
++    def test_initial_position(self):
++        brick = Brick(100, 200)
++        assert brick.center_x == 100
++        assert brick.center_y == 200
++
++    def test_destroy_hides_brick(self):
++        brick = Brick(100, 200)
++        assert brick.visible is True or brick.alpha > 0
++        brick.destroy()
++        assert brick.visible is False or brick.alpha == 0
+Index: Unit_Tests/TestPaddle.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Unit_Tests/TestPaddle.py b/Unit_Tests/TestPaddle.py
+new file mode 100644
+--- /dev/null	(date 1744063421640)
++++ b/Unit_Tests/TestPaddle.py	(date 1744063421640)
+@@ -0,0 +1,24 @@
++from Paddle import Paddle
++
++SCREEN_WIDTH = 800
++
++class TestPaddle:
++
++    def test_initial_position_and_size(self):
++        paddle = Paddle(SCREEN_WIDTH)
++        assert paddle.center_x == SCREEN_WIDTH // 2
++        assert paddle.change_x == 0
++
++    def test_move_left_decreases_position(self):
++        paddle = Paddle(SCREEN_WIDTH)
++        paddle.center_x = 400
++        paddle.change_x = 0
++        paddle.move_left()
++        assert paddle.change_x < 0
++
++    def test_move_right_increases_position(self):
++        paddle = Paddle(SCREEN_WIDTH)
++        paddle.center_x = 400
++        paddle.change_x = 0
++        paddle.move_right()
++        assert paddle.change_x > 0
+Index: .idea/CMSC 495 - Breakout.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/.venv\" />\r\n    </content>\r\n    <orderEntry type=\"jdk\" jdkName=\"Python 3.13\" jdkType=\"Python SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/CMSC 495 - Breakout.iml b/.idea/CMSC 495 - Breakout.iml
+--- a/.idea/CMSC 495 - Breakout.iml	(revision cd64b5d62107f5556d73ba4942d7bddc9badff1a)
++++ b/.idea/CMSC 495 - Breakout.iml	(date 1744059554002)
+@@ -7,4 +7,10 @@
+     <orderEntry type="jdk" jdkName="Python 3.13" jdkType="Python SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
++  <component name="PackageRequirementsSettings">
++    <option name="requirementsPath" value="" />
++  </component>
++  <component name="TestRunnerService">
++    <option name="PROJECT_TEST_RUNNER" value="py.test" />
++  </component>
+ </module>
+\ No newline at end of file
