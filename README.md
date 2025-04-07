@@ -8,8 +8,10 @@ Christopher Nester
 Sung Kim
 
 # Development Tools
+<pre>
 IDE:           Pycharm Community Edition 2024.3.5  
 Language:      Python 3.13  
+</pre>
 
 # Dependencies
 Packages:      arcade 3.0.2  
