@@ -6,7 +6,7 @@ class Brick(arcade.Sprite):
     Represents a single brick in the Breakout game.
     Inherits from arcade.Sprite and handles its own initialization and removal.
     """
-    def __init__(self, x, y):
+    def __init__(self, x, y,):
         """
         Initialize a Brick object at the given (x, y) position.
         Loads the brick texture from the Graphics folder relative to this file.
@@ -18,14 +18,11 @@ class Brick(arcade.Sprite):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         texture_path = os.path.normpath(os.path.join(current_dir, "Graphics", "Brick.png"))
 
-        print("Loading brick texture from:", texture_path)
-
-        # Check if the texture file exists
         if not os.path.exists(texture_path):
             raise FileNotFoundError(f"Brick texture not found at: {texture_path}")
 
         # Initialize the sprite with the brick texture
-        super().__init__(texture_path, scale=0.75)
+        super().__init__(texture_path, scale=1)
 
         # Set the position of the brick
         self.center_x = x

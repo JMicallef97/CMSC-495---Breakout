@@ -44,17 +44,20 @@ class GameManager:
         """
         Creates a 5-row by 10-column grid of bricks and adds them to the SpriteList.
         """
-        brick_width = 60
-        brick_height = 20
+        brick_width = 64
+        brick_height = 32
         rows = 5
         cols = 10
-        x_offset = 60
-        y_offset = 400
+
+        # Compute horizontal offset to center the full row of bricks
+        total_brick_width = cols * brick_width
+        x_offset = (self.width - total_brick_width) // 2
+        y_offset = self.height - 100  # Starting vertical position
 
         for row in range(rows):
             for col in range(cols):
-                brick_x = x_offset + col * brick_width
-                brick_y = y_offset - row * brick_height
+                brick_x = x_offset + col * brick_width + brick_width // 2
+                brick_y = y_offset - row * brick_height - brick_height // 2
                 brick = Brick(brick_x, brick_y)
                 self.bricks.append(brick)
 

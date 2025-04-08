@@ -6,11 +6,19 @@ class Ball(arcade.Sprite):
     Represents the ball in the Breakout game. Inherits from arcade.Sprite and handles movement,
     texture loading, collision with screen boundaries, and position updates.
     """
-    def __init__(self):
+
+    def __init__(self, screen_width=640, screen_height=480):
         """
         Initialize the Ball object with a texture, size, and movement properties.
         Loads the ball texture from the Graphics folder relative to this file.
+
+        :param screen_width: The width of the game window.
+        :param screen_height: The height of the game window.
         """
+        # Store screen dimensions first
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+
         # Construct full path to the ball texture
         current_dir = os.path.dirname(os.path.abspath(__file__))
         texture_path = os.path.normpath(os.path.join(current_dir, "Graphics", "Ball.png"))
@@ -26,10 +34,10 @@ class Ball(arcade.Sprite):
 
         # Define physical properties
         self.radius = self.width // 2
-        self.center_x = 400  # Initial X position
-        self.center_y = 300  # Initial Y position
-        self.change_x = 4    # Horizontal speed
-        self.change_y = 4    # Vertical speed
+        self.center_x = self.screen_width // 2
+        self.center_y = self.screen_height // 2
+        self.change_x = 0
+        self.change_y = 0
 
     def move_ball(self):
         """
@@ -40,9 +48,9 @@ class Ball(arcade.Sprite):
         self.center_y += self.change_y
 
         # Bounce off the left or right walls
-        if self.center_x <= self.radius or self.center_x >= 800 - self.radius:
+        if self.center_x <= self.radius or self.center_x >= self.screen_width - self.radius:
             self.change_x *= -1
 
         # Bounce off the top wall
-        if self.center_y >= 600 - self.radius:
+        if self.center_y >= self.screen_height - self.radius:
             self.change_y *= -1
