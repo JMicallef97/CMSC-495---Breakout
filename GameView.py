@@ -2,11 +2,15 @@ import arcade
 
 from InputManager import InputManager
 
-
-# This class is used as a starting point for the different game view objects,
-# encapsulating functions often used in game view states to avoid code duplication.
-# NOTE: Classes that inherit from this class must initialize self.state in the
-# constructor in order for the code to work properly.
+# This class is used as the base class for the different views in the program
+# (where a view is a code construct provided by the Arcade game development
+# framework to encapsulate user interface elements for a particular game state,
+# such as the main menu or a pause menu, as well as receive input from the
+# user). It encapsulates a GameState object which provides code to set up and
+# handle events from user interface controls that the GameView is responsible
+# for displaying and updating. The GameView class is also responsible for capturing
+# and forwarding user input (keyboard and mouse input) to the InputManager class,
+# which is processed by the active program state.
 class GameView(arcade.View):
 
     # Constructor for the GameView object.

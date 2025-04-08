@@ -6,6 +6,9 @@ from GameState import GameState
 from GameData import GameData
 from GameView import GameView
 
+# This class encapsulates code to set up and display the difficulty adjustment menu,
+# providing event handlers for the menu controls (slider bars to adjust different
+# difficulty settings).
 class AdjustDifficultyState(GameState):
     def __init__(self):
         super().__init__("Adjust Difficulty")
@@ -103,9 +106,6 @@ class AdjustDifficultyState(GameState):
         self.manager.disable()
         import MainMenuState
         arcade.get_window().show_view(GameView(MainMenuState.MainMenuState()))
-
-    def updateState(self):
-        pass
 
     def drawState(self):
         self.manager.draw()

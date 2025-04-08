@@ -5,8 +5,8 @@ from GameView import GameView
 from InputManager import InputManager
 from MainMenuState import MainMenuState
 
-# This class contains code used to manage user input, game logic and rendering,
-# and the game window.
+# This class contains code to set up and display the main menu program view, which is
+# executed at program launch.
 class ProgramView(arcade.View):
 
     # Instance variables
@@ -39,7 +39,7 @@ class ProgramView(arcade.View):
             # create the main menu view, and switch to it
             self.mainMenuState = MainMenuState()
             arcade.get_window().show_view(GameView(self.mainMenuState))
-            # update flag
+            # update flag to avoid re-initializing the main menu state endlessly.
             self.isMainMenuViewShown = True
 
     # Contains code to draw the game to the screen

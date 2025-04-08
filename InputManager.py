@@ -1,5 +1,5 @@
-# This class is used to store user input-related variables, because
-# Python's compiler can't handle circular references.
+# This class is used to store user input data, which will be processed by the
+# active program/game state.
 class InputManager:
     # -Used to store the state of the left mouse button. True if the button is pressed, false
     #  if not.
@@ -13,8 +13,8 @@ class InputManager:
     #  (for example, arcade.key.A for the 'A' key).
     isKeyPressed = {}
 
-    # Stores the X coordinate of the mouse
+    # Stores the X coordinate of the mouse.
     mouseCoordX = 0
 
-    # Stores the Y coordinate of the mouse
+    # Stores the Y coordinate of the mouse.
     mouseCoordY = 0

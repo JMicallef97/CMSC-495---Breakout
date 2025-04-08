@@ -1,5 +1,6 @@
 import arcade
 import arcade.gui
+
 from GameState import GameState
 from GameView import GameView
 
@@ -55,7 +56,7 @@ class HowToPlayState(GameState):
     def on_click_next(self, event):
         self.manager.disable()
         import BreakoutGameState  # Local import.
-        arcade.get_window().show_view(GameView(BreakoutGameState.GameStartState()))
+        arcade.get_window().show_view(GameView(BreakoutGameState.BreakoutGameState()))
 
     # Update the state (no periodic updates required).
     def updateState(self):

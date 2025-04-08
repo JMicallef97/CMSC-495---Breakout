@@ -1,4 +1,4 @@
-# This class is used to store constants for the game.
+# This class is used to store constants used within the program code.
 class Constants:
     # sets the game window width
     WINDOW_WIDTH = 640

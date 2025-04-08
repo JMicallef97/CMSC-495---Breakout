@@ -1,13 +1,15 @@
 import arcade
 import arcade.gui
+
 from GameView import GameView
 from HowToPlayState import HowToPlayState
 from AdjustDifficultyState import AdjustDifficultyState
 from HighScoresState import HighScoresState
 from GameState import GameState
 
-# This class encapsulates the main menu UI and provides options for starting the game,
-# adjusting difficulty, or viewing high scores.
+# This class encapsulates code to set up and display the difficulty adjustment menu,
+# providing event handlers for the menu controls (buttons to start the game, access the
+# game difficulty adjustment menu, or access the high scores menu).
 class MainMenuState(GameState):
     def __init__(self):
         # Initialize the base GameState with the name "Main Menu"

@@ -1,9 +1,12 @@
 import arcade
 import arcade.gui
+
 from GameState import GameState
 from GameView import GameView
 
-# Provides the UI for displaying high scores with a back button to return to the main menu.
+# This class encapsulates code to set up and display the high score menu,
+# providing event handlers for the menu controls (displaying the top 10
+# high scores as well as a back button to return to the main menu).
 class HighScoresState(GameState):
     # Initialize the HighScoresState instance.
     def __init__(self):
