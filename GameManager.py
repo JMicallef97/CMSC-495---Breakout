@@ -123,8 +123,9 @@ class GameManager:
         self.ball.move_ball()
 
         # Paddle collision
-        if arcade.check_for_collision(self.ball, self.paddle):
+        if arcade.check_for_collision(self.ball, self.paddle) and self.ball.change_y < 0:
             self.ball.change_y *= -1
+            self.ball.center_y = self.paddle.top + self.ball.height / 2 + 1
 
         # Brick collision
         hit_list = arcade.check_for_collision_with_list(self.ball, self.bricks)
