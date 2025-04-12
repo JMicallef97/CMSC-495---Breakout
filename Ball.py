@@ -1,5 +1,6 @@
 
 import arcade
+import math
 import os
 
 class Ball(arcade.Sprite):
@@ -8,7 +9,7 @@ class Ball(arcade.Sprite):
     texture loading, collision with screen boundaries, and position updates.
     """
 
-    def __init__(self, screen_width=640, screen_height=480):
+    def __init__(self, screen_width=640, screen_height=480, speed_difficulty: int = 1):
         """
         Initialize the Ball object with a texture, size, and movement properties.
         Loads the ball texture from the Graphics folder relative to this file.
@@ -19,6 +20,7 @@ class Ball(arcade.Sprite):
         # Store screen dimensions first
         self.screen_width = screen_width
         self.screen_height = screen_height
+        self.speed_difficulty = speed_difficulty
 
         # Construct full path to the ball texture
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -55,3 +57,19 @@ class Ball(arcade.Sprite):
         # Bounce off the top wall
         if self.center_y >= self.screen_height - self.radius:
             self.change_y *= -1
+
+    def apply_initial_velocity(self, angle_degrees: float):
+        """
+        Sets the initial ball velocity based on difficulty and launch angle.
+
+        :param angle_degrees: Angle to launch the ball, in degrees (e.g., 45° to 135° range).
+        """
+        angle_rad = math.radians(angle_degrees)
+
+        base_speed = 3
+        max_boost = 4
+        difficulty_scale = (self.speed_difficulty - 1) / 9  # Normalize: 1→0.0, 10→1.0
+        speed = base_speed + max_boost * difficulty_scale
+
+        self.change_x = speed * math.cos(angle_rad)
+        self.change_y = speed * math.sin(angle_rad)

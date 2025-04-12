@@ -6,7 +6,7 @@ class Paddle(arcade.Sprite):
     Represents the player's paddle in the Breakout game.
     Inherits from arcade.Sprite and handles movement and boundary constraints.
     """
-    def __init__(self, screen_width: int):
+    def __init__(self, screen_width: int, width_difficulty: int = 1, speed_difficulty: int = 1):
         """
         Initialize the Paddle object with a texture, position, and movement speed.
         The paddle starts centered horizontally and near the bottom of the screen.
@@ -29,10 +29,18 @@ class Paddle(arcade.Sprite):
         # Store screen width for movement limits
         self.screen_width = screen_width
 
+        # Scale paddle width inversely by difficulty
+        base_width = 150
+        width_scale = max(1, min(width_difficulty, 10))  # Clamp between 1 and 10
+        self.width = int(base_width * (1.0 - 0.06 * (width_scale - 1)))  # ~6% reduction per level
+
+        # Scale movement speed proportionally by difficulty
+        base_speed = 4
+        self.speed = base_speed + (speed_difficulty - 1) * 0.6
+
         # Set initial position and movement speed
         self.center_x = screen_width // 2
         self.center_y = 50  # Near bottom of screen
-        self.speed = 6
 
     def move_left(self):
         """

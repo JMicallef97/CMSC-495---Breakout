@@ -6,6 +6,7 @@ from Ball import Ball
 from Paddle import Paddle
 from Brick import Brick
 from InputManager import InputManager
+from GameData import GameData
 
 class GameManager:
     """
@@ -20,9 +21,14 @@ class GameManager:
         self.width = width
         self.height = height
 
+        # Retrieve difficulty settings
+        paddle_width_difficulty = GameData().getPaddleWidthDifficulty()
+        paddle_speed_difficulty = GameData().getPaddleMoveSpeedDifficulty()
+        ball_speed_difficulty = GameData().getBallSpeedDifficulty()
+
         # Create main game objects
-        self.paddle = Paddle(width)
-        self.ball = Ball()
+        self.paddle = Paddle(width, paddle_width_difficulty, paddle_speed_difficulty)
+        self.ball = Ball(width, height, ball_speed_difficulty)
 
         # SpriteLists for efficient drawing
         self.paddle_list = arcade.SpriteList()
@@ -136,10 +142,8 @@ class GameManager:
         Launches the ball at a random upward angle from the paddle.
         """
         self.ball_attached = False
-        angle_rad = math.radians(random.uniform(30, 150))
-        speed = 5
-        self.ball.change_x = speed * math.cos(angle_rad)
-        self.ball.change_y = speed * math.sin(angle_rad)
+        angle = random.uniform(30, 150)
+        self.ball.apply_initial_velocity(angle)
 
     def draw(self) -> None:
         """
