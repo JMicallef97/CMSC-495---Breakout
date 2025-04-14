@@ -3,21 +3,18 @@ import math
 import random
 
 from Ball import Ball
+from GameView import GameView
 from Paddle import Paddle
 from Brick import Brick
 from InputManager import InputManager
 from GameData import GameData
 
 class GameManager:
-    """
-    Manages the core gameplay elements for the Breakout game, including
-    paddle and ball movement, brick generation, scoring, and input handling.
-    """
+    # Manages the core gameplay elements for the Breakout game, including
+    # paddle and ball movement, brick generation, scoring, and input handling.
 
     def __init__(self, width: int, height: int):
-        """
-        Initialize the game manager with the screen dimensions and game state.
-        """
+        # Initialize the game manager with the screen dimensions and game state.
         self.width = width
         self.height = height
 
@@ -47,9 +44,7 @@ class GameManager:
         self.ball_attached = True  # Ball starts on paddle
 
     def create_bricks(self) -> None:
-        """
-        Creates a 5-row by 10-column grid of bricks and adds them to the SpriteList.
-        """
+        # Creates a 5-row by 10-column grid of bricks and adds them to the SpriteList.
         brick_width = 64
         brick_height = 32
         rows = 5
@@ -68,10 +63,8 @@ class GameManager:
                 self.bricks.append(brick)
 
     def reset_game(self) -> None:
-        """
-        Resets the ball's position to the paddle after a life is lost.
-        Ends the game if no lives remain.
-        """
+        # Resets the ball's position to the paddle after a life is lost.
+        # Ends the game if no lives remain.
         self.ball.center_x = self.paddle.center_x
         self.ball.center_y = self.paddle.center_y + (self.paddle.height / 2) + (self.ball.height / 2)
         self.ball.change_x = 0
@@ -83,17 +76,33 @@ class GameManager:
             self.game_over()
 
     def game_over(self) -> None:
-        """
-        Ends the game and closes the window.
-        """
-        print(f"Game Over! Final Score: {self.score}")
-        arcade.close_window()
+
+        # Handles the game over condition:
+        # - Saves the final score to a file ("highscores.txt") with a timestamp.
+        # - Transitions to the GameOverState so the player can choose to restart, return to the main menu, or exit.
+
+        final_score = self.score
+        print(f"Game Over! Final Score: {final_score}")
+        try:
+            import datetime
+            now = datetime.datetime.now()
+            # Open (or create) "highscores.txt" in append mode.
+            with open("highscores.txt", "a") as f:
+                # Write the score with a timestamp.
+                f.write(f"{final_score} - {now.strftime('%Y-%m-%d %H:%M')}\n")
+        except Exception as e:
+            print("Error writing score to file:", e)
+
+        # Transition to the game over state instead of closing the window.
+        from GameOverState import GameOverState
+        # Assume the GameOverState takes the final_score as a parameter.
+        # Use your project's GameView wrapper to display the new state.
+        arcade.get_window().show_view(GameView(GameOverState(final_score)))
 
     def update(self) -> None:
-        """
-        Updates the game state every frame: handles paddle movement, ball motion,
-        collision detection, and game logic.
-        """
+        # Updates the game state every frame: handles paddle movement, ball motion,
+        # collision detection, and game logic.
+
         if self.game_paused:
             return
 
@@ -139,18 +148,15 @@ class GameManager:
             self.reset_game()
 
     def launch_ball(self) -> None:
-        """
-        Launches the ball at a random upward angle from the paddle.
-        """
+        # Launches the ball at a random upward angle from the paddle.
+
         self.ball_attached = False
         angle = random.uniform(30, 150)
         self.ball.apply_initial_velocity(angle)
 
     def draw(self) -> None:
-        """
-        Draws all game elements including the paddle, ball, bricks, score, and lives.
-        Also shows a launch message if the ball is not yet in play.
-        """
+        # Draws all game elements including the paddle, ball, bricks, score, and lives.
+        # Also shows a launch message if the ball is not yet in play.
         self.paddle_list.draw()
         self.ball_list.draw()
         self.bricks.draw()
