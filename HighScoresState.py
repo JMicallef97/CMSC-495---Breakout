@@ -5,7 +5,8 @@ from GameView import GameView
 
 # Represents the High Scores state.
 # Reads the top 10 scores from "highscores.txt" and displays them.
-# If there are less than 10 scores, it pads the list with "---".
+# If there are less than 10 scores, pads the remaining lines with "---".
+# If the file does not exist, displays "No score file exists".
 class HighScoresState(GameState):
     def __init__(self):
         super().__init__("High Scores")
@@ -21,6 +22,7 @@ class HighScoresState(GameState):
 
         # Read high scores from file "highscores.txt"
         scores_list = []
+        file_exists = True
         try:
             with open("highscores.txt", "r") as f:
                 lines = f.readlines()
@@ -28,27 +30,33 @@ class HighScoresState(GameState):
                     line = line.strip()
                     if not line:
                         continue
-                    # Expected line format: "score - timestamp"
+                    # Expected line format: "score - timestamp" (timestamp without seconds)
                     parts = line.split(" - ")
                     try:
                         score_val = int(parts[0])
                     except ValueError:
                         score_val = 0
                     scores_list.append((score_val, line))
+        except FileNotFoundError:
+            file_exists = False
         except Exception as e:
             print("Error reading high scores file:", e)
+            file_exists = False
 
-        # Sort scores descending (highest score first)
-        scores_list.sort(key=lambda x: x[0], reverse=True)
-
-        # Build a list of top 10 scores, padding with "---" if necessary.
-        display_lines = []
-        for idx in range(10):
-            if idx < len(scores_list):
-                display_lines.append(f"{idx+1}. {scores_list[idx][1]}")
-            else:
-                display_lines.append(f"{idx+1}. ---")
-        scores_text = "\n".join(display_lines)
+        # Build the display text depending on file existence.
+        if not file_exists:
+            scores_text = "No score file exists"
+        else:
+            # Sort scores descending (highest score first)
+            scores_list.sort(key=lambda x: x[0], reverse=True)
+            # Build a list of top 10 scores, padding with "---" if necessary.
+            display_lines = []
+            for idx in range(10):
+                if idx < len(scores_list):
+                    display_lines.append(f"{idx+1}. {scores_list[idx][1]}")
+                else:
+                    display_lines.append(f"{idx+1}. ---")
+            scores_text = "\n".join(display_lines)
 
         # Create a label for displaying the scores.
         self.info_label = arcade.gui.UILabel(
@@ -64,11 +72,9 @@ class HighScoresState(GameState):
         self.manager.add(self.center_anchor)
 
     def on_click_back(self, event):
-        # Disable the current UI manager.
+        # Disable the UI manager and return to the main menu.
         self.manager.disable()
-        # Local import to avoid circular dependencies.
-        import MainMenuState
-        # Transition to the main menu state.
+        import MainMenuState  # Local import to break circular dependency.
         arcade.get_window().show_view(GameView(MainMenuState.MainMenuState()))
 
     def updateState(self):
