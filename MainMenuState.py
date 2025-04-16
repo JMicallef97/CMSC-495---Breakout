@@ -30,7 +30,7 @@ class MainMenuState(GameState):
         self.v_box.add(arcade.gui.UISpace(height=50))
 
         # Define the three main menu options
-        self.options = ["Start Game", "Adjust difficulty", "High Scores"]
+        self.options = ["Start Game", "Adjust Difficulty", "High Scores"]
 
         # Create a button for each option and attach an event handler
         for option in self.options:
@@ -53,7 +53,7 @@ class MainMenuState(GameState):
             # Choose the new state based on the option clicked
             if option == "Start Game":
                 view = GameView(HowToPlayState())
-            elif option == "Adjust difficulty":
+            elif option == "Adjust Difficulty":
                 view = GameView(AdjustDifficultyState())
             elif option == "High Scores":
                 view = GameView(HighScoresState())
