@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0" version="26.2.12">
   <diagram name="Page-1" id="Wz7o2xcDOLsr5Lf2rxjJ">
-    <mxGraphModel dx="1044" dy="544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="870" dy="453" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -137,7 +137,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="wdhFVKG3JHV571OrvWq3-31" value="Quit Game (press Q twice during game)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="390" y="360" width="110" height="30" as="geometry" />
+          <mxGeometry x="390" y="370" width="110" height="20" as="geometry" />
         </mxCell>
         <mxCell id="wdhFVKG3JHV571OrvWq3-32" value="Win Game (break all bricks)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="390" y="410" width="170" height="30" as="geometry" />
@@ -203,7 +203,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="wdhFVKG3JHV571OrvWq3-55" value="&quot;Exit Game&quot; button" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="140" y="440" width="110" height="15" as="geometry" />
+          <mxGeometry x="140" y="440" width="110" height="20" as="geometry" />
         </mxCell>
         <mxCell id="wdhFVKG3JHV571OrvWq3-56" value="(Program ends/ Game window closes)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="20" y="200" width="90" height="30" as="geometry" />
@@ -225,6 +225,9 @@
         </mxCell>
         <mxCell id="wdhFVKG3JHV571OrvWq3-60" value="&lt;div&gt;&lt;font style=&quot;font-size: 19px;&quot;&gt;&lt;b&gt;Project &quot;Breakout&quot; Game State Flowchart&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 19px;&quot;&gt;&lt;b&gt;Group 3 (Jacob Micallef, Christopher Nester, Sung Kim)&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=default;" vertex="1" parent="1">
           <mxGeometry x="20" y="30" width="660" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="wdhFVKG3JHV571OrvWq3-61" value="&lt;div&gt;&quot;Next&quot;&lt;/div&gt;&lt;div&gt;Button&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="350" width="50" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
