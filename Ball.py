@@ -1,4 +1,3 @@
-
 import arcade
 import math
 import os
@@ -16,6 +15,7 @@ class Ball(arcade.Sprite):
 
         :param screen_width: The width of the game window.
         :param screen_height: The height of the game window.
+        :param speed_difficulty: Difficulty level affecting ball speed (1–10).
         """
         # Store screen dimensions first
         self.screen_width = screen_width
@@ -73,3 +73,23 @@ class Ball(arcade.Sprite):
 
         self.change_x = speed * math.cos(angle_rad)
         self.change_y = speed * math.sin(angle_rad)
+
+    def deflect_off_paddle(self, paddle):
+        """
+        Adjust the ball's angle based on where it hits the paddle.
+
+        :param paddle: The paddle instance the ball collided with.
+        """
+        # Compute how far from the center of the paddle the ball hit (normalized -1 to 1)
+        offset = (self.center_x - paddle.center_x) / (paddle.width / 2)
+        offset = max(-1, min(1, offset))  # Clamp to [-1, 1]
+
+        # Use offset to influence angle between 30° and 150°
+        # offset = -1 → 150°, 0 → 90°, +1 → 30°
+        angle = 90 - offset * 60
+
+        # Apply new velocity using the offset angle
+        self.apply_initial_velocity(angle)
+
+        # Slightly reposition the ball to avoid repeated collisions
+        self.center_y = paddle.top + self.height / 2 + 1

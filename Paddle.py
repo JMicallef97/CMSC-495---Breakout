@@ -36,7 +36,7 @@ class Paddle(arcade.Sprite):
 
         # Scale movement speed proportionally by difficulty
         base_speed = 4
-        self.speed = base_speed + (speed_difficulty - 1) * 0.6
+        self.speed = base_speed + (10 - speed_difficulty) * 0.6
 
         # Set initial position and movement speed
         self.center_x = screen_width // 2
