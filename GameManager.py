@@ -165,6 +165,10 @@ class GameManager:
             self.ball.change_y *= -1
             self.score += 10
 
+        # Game winning condition
+        if self.score >= 500:
+            self.game_over()
+
         # Ball falls off screen
         if self.ball.center_y <= 0:
             self.reset_game()
