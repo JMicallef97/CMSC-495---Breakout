@@ -1,6 +1,7 @@
 # This class defines an object used to store data used by the game, such as difficulty
 # settings, game score, et cetera. It is meant to persistently store data across different
 # menus and game sessions.
+
 class GameData:
 
     # Stores the difficulty setting affecting the width of the paddle. Should be a value

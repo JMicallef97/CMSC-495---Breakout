@@ -1,9 +1,12 @@
 import arcade
 
+from AdjustDifficultyState import AdjustDifficultyState
+from Ball import Ball
 from Constants import Constants
 from GameView import GameView
 from InputManager import InputManager
 from MainMenuState import MainMenuState
+from pathlib import Path
 
 # This class contains code to set up and display the main menu program view, which is
 # executed at program launch.
@@ -12,17 +15,21 @@ class ProgramView(arcade.View):
     # Instance variables
     # -Boolean, used to check if the main menu view has been initialized and displayed
     # or not.
-    isMainMenuViewShown = False
+    isMainMenuViewShown : bool
 
     # -Stores a reference to a MainMenuState instance, which contains code to
     #  display and manage the main menu of the game (the starting state for the
     #  application).
-    mainMenuState = None
+    mainMenuState : MainMenuState
 
     # Constructor for the game class
     def __init__(self):
         super().__init__()
         self.background_color = arcade.color.AMAZON
+
+        # initialize instance variables
+        self.isMainMenuViewShown = False
+        self.mainMenuState = None
 
         # initialize the isKeyPressed dictionary with the keys used to control the game
         InputManager.isKeyPressed[arcade.key.A] = False   # used to move the paddle left during gameplay
@@ -52,6 +59,7 @@ class ProgramView(arcade.View):
         if self.isMainMenuViewShown:
             # Draw the main menu state graphics
             self.mainMenuState.drawState()
+
 
 # Contains the entry point of the application/game, which is used to set up the game
 # program

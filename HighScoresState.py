@@ -77,8 +77,5 @@ class HighScoresState(GameState):
         import MainMenuState  # Local import to break circular dependency.
         arcade.get_window().show_view(GameView(MainMenuState.MainMenuState()))
 
-    def updateState(self):
-        pass
-
     def drawState(self):
         self.manager.draw()

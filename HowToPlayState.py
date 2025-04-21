@@ -1,6 +1,5 @@
 import arcade
 import arcade.gui
-
 from GameState import GameState
 from GameView import GameView
 

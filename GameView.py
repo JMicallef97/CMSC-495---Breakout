@@ -1,5 +1,4 @@
 import arcade
-
 from InputManager import InputManager
 
 # This class is used as the base class for the different views in the program

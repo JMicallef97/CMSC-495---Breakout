@@ -6,6 +6,7 @@ class Brick(arcade.Sprite):
     Represents a single brick in the Breakout game.
     Inherits from arcade.Sprite and handles its own initialization and removal.
     """
+
     def __init__(self, x, y,):
         """
         Initialize a Brick object at the given (x, y) position.

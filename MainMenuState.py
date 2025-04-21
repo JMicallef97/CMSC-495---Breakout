@@ -61,10 +61,6 @@ class MainMenuState(GameState):
             arcade.get_window().show_view(view)
         return on_click
 
-    def updateState(self):
-        # Main menu is static; no dynamic update required.
-        pass
-
     def drawState(self):
         # Draw the UI for the main menu
         self.manager.draw()

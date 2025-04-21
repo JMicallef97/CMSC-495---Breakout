@@ -72,8 +72,5 @@ class GameOverState(GameState):
         self.manager.disable()
         arcade.close_window()
 
-    def updateState(self):
-        pass
-
     def drawState(self):
         self.manager.draw()

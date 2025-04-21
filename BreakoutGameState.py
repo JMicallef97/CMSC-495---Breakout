@@ -4,7 +4,6 @@ from Constants import Constants
 from GameManager import GameManager
 from GameState import GameState
 
-
 # This class encapsulates code to set up and display the Breakout gameplay game state,
 # providing methods to update and draw the state (handled by an instance of the GameManager
 # class).
