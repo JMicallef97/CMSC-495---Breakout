@@ -29,16 +29,17 @@ class HowToPlayState(GameState):
         # Set the instructions text.
         instructions = (
             "How To Play:\n"
-            "- Use arrow keys to move your paddle.\n"
+            "- Use 'A' and 'D' keys to move your paddle.\n"
             "- Bounce the ball to break bricks.\n"
-            "- Don't let the ball fall!"
+            "- Don't let the ball fall!\n"
+            "- Press 'P' to pause the game and 'Q' to quit."
         )
         self.info_label = arcade.gui.UILabel(
             text=instructions,
             font_size=20,
             text_color=arcade.color.WHITE,
             multiline=True,
-            width=400
+            width=500
         )
         # Center the instruction text.
         self.center_anchor = arcade.gui.UIAnchorLayout()
